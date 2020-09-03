@@ -1,3 +1,5 @@
+// import { HPage } from './../pages/h/h';
+// import { DpscanPage } from './../pages/dpscan/dpscan';
 import {HttpClientModule} from '@angular/common/http';
 import { BarcodescanPage } from './../pages/barcodescan/barcodescan';
 import { BrowserModule } from '@angular/platform-browser';
@@ -27,7 +29,8 @@ import {HttpModule} from '@angular/http';
     HomePage,
     ListPage,
     BarcodescanPage,
-    LoginPage
+    LoginPage,
+  
     
     
     
@@ -46,8 +49,8 @@ import {HttpModule} from '@angular/http';
     HomePage,
     ListPage,
     BarcodescanPage,
-    LoginPage
-    
+    LoginPage,
+ 
 
 
   ],

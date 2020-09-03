@@ -17,12 +17,15 @@ export class PscanPage {
 
   scanText = " ";
   scanFormat="";
-
+  Dt =[];
   constructor(public navCtrl: NavController, public navParams: NavParams,private barcodeScanner: BarcodeScanner) {
+ 
+    this.Dt = JSON.parse(localStorage.getItem('TC'));
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PscanPage');
+    console.log(this.Dt);
   }
 
   Pscan(){

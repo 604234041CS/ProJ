@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,AlertController  } from 'ionic-angular';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
+import *as Enums from './../../enums/enums';
 //import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 /**
  * Generated class for the LoginPage page.
@@ -17,6 +18,8 @@ import 'rxjs/add/operator/map';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+
+  Dt = [];
   logindata: any= {};
   constructor(public navCtrl: NavController, public navParams: NavParams,public http:Http , public alertCrtl:AlertController) {
     this.logindata.username="";
@@ -33,7 +36,8 @@ export class LoginPage {
     console.log("user:",this.logindata.username);
     console.log("pass:",this.logindata.password);
 
-      let url : string = "http://127.0.0.1/APP/PR_PHP/login.php";
+      //let url : string = "http://127.0.0.1/APP/PR_PHP/login.php";
+      let url = Enums.APIURL.URL1 + "/APP/PR_PHP/login.php";
       let datapost = JSON.stringify({
         user:this.logindata.username,
         pass:this.logindata.password
@@ -42,6 +46,10 @@ export class LoginPage {
       this.http.post(url,datapost)
       .map(res=>res.json())
       .subscribe(data =>{
+        let TC = JSON.stringify(datapost);
+        localStorage.setItem('TC',TC);
+        console.log(data);
+        this.Dt = JSON.parse(localStorage.getItem('TC'));
         if(data!=null){
           this.navCtrl.setRoot(HomePage);
         }else{

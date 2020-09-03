@@ -1,13 +1,8 @@
+import { Http } from '@angular/http';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-
-/**
- * Generated class for the LscanPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import *as Enums from './../../enums/enums';
 
 @IonicPage()
 @Component({
@@ -15,15 +10,71 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
   templateUrl: 'lscan.html',
 })
 export class LscanPage {
-
-  scanText = " ";
+  Dt =[];
+  scanText = "";
   scanFormat="";
+  Date1: any ={};
+  Date2 = [];
+  saveData: any = {};
+  Kon: any ={};
+  constructor(public navCtrl: NavController, public navParams: NavParams ,private barcodeScanner: BarcodeScanner,
+              public http: Http, public alertCrtl:AlertController) {
+    
+    this.Dt = JSON.parse(localStorage.getItem('TC'));
+    console.log(this.Dt);
+  
+  }
+  
+  
+  
+  ionViewDidLoad() {
+    console.log(this.Dt);
+    console.log(this.Date1);
+    console.log('ionViewDidLoad LscanPage');
+  }
+  submit(){
 
-  constructor(public navCtrl: NavController, public navParams: NavParams ,private barcodeScanner: BarcodeScanner) {
+     this.saveData = {
+      saveD: this.Date1.saveD,
+      tcID: this.Dt[0].TC_id,
+      saveSD: this.scanText,
+    };
+    
+    let url = Enums.APIURL.URL1 + '/app/PR_PHP/M_insert.php';
+    
+    if(this.saveData != null){
+      
+      this.http.post(url,this.saveData).subscribe(
+        (data: any) => {
+          this.Kon = data;
+          
+          
+          let Wan = JSON.stringify(this.saveData);
+          localStorage.setItem('sca',Wan);
+          this.Date2 = JSON.parse(localStorage.getItem('sca'));
+          console.log("Date:",this.saveData)
+        }
+      )
+
+    }
+    if(this.scanText !=""){
+      console.log("Date:",this.scanText)
+    }
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LscanPage');
+  // alertPopup(title:string,Msg:string){
+  //   let alert = this.alertCrtl.create({
+  //       title : title,
+  //       subTitle : Msg,
+  //       buttons : ['OK']  
+  //   }); 
+    
+  //   alert.present();
+  // }
+
+  save(){
+
+
   }
 
   Lscan(){
@@ -31,7 +82,6 @@ export class LscanPage {
     this.barcodeScanner.scan().then((barcodeData) => {
       console.log('Barcode data', barcodeData);
       this.scanText=barcodeData.text;
-      this.scanFormat=barcodeData.format;
      }).catch(err => {
          console.log('Error', err);
      });
@@ -50,7 +100,14 @@ export class LscanPage {
   }
 
 
+  DTLscan(){
+    this.navCtrl.push("DlscanPage")
+  }
 
+  // D(){
+  //   this.Da
 
+  // }
+ 
 
 }//END

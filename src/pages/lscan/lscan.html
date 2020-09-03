@@ -11,11 +11,31 @@
 </ion-header>
 
 <ion-content padding>
-  <button id="login-button1"  ion-button color="dark" block style="border-radius:50px 50px 50px 50px;" on-click="Lscan()">
+
+  <ion-item>
+    <ion-label>กรุณาเลือกวันที่</ion-label>
+    <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]= "this.Date1.saveD">
+    </ion-datetime>
+    </ion-item>
+
+      <button ion-button color="dark"  style="border-radius:50px 50px 50px 50px;" on-click="submit()">
+        <ion-icon name="save" ></ion-icon>
+        ถัดไป
+      </button>
+      <ion-list *ngIf="this.saveD !=''">
+        <button ion-button color="dark" block style="border-radius:50px 50px 50px 50px;" on-click="Lscan()">
+          สแกนเช็คการเข้าแถว
+        </button>
+      </ion-list>
+
+  <button ion-button color="dark" block style="border-radius:50px 50px 50px 50px;" on-click="DTLscan()">
     เช็คการเข้าแถว
   </button>
+  
 
-  <button id="login-button1"  ion-button color="dark" block style="border-radius:50px 50px 50px 50px;" on-click="UPlscan()">
+
+
+  <button ion-button color="dark" block style="border-radius:50px 50px 50px 50px;" on-click="UPlscan()">
     ชดการเข้าแถว
   </button>
   
